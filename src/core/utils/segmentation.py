@@ -1,13 +1,23 @@
 import cv2
 import numpy as np
 
+
+
+def segment_colors(img):
+    green_segmented_img = segment_green(img)
+    red_segmented_img = segment_red(img)
+    black_segmented_img = detect_and_paint(img) #segment_black(img)
+
+    return green_segmented_img, red_segmented_img, black_segmented_img
+
+
 def segment_green(image):
     # Convert the image from BGR to HSV color space
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Define the lower and upper bounds for the green color in HSV
-    lower_green = np.array([40, 40, 40])  # Adjust these values based on your specific case
-    upper_green = np.array([80, 255, 255])  # Adjust these values based on your specific case
+    lower_green = np.array([25, 25, 25])  # Adjust these values based on your specific case
+    upper_green = np.array([110, 255, 255])  # Adjust these values based on your specific case
 
     # Create a mask using the inRange function to segment the green color
     mask = cv2.inRange(hsv, lower_green, upper_green)
