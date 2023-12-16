@@ -13,3 +13,10 @@ def show_img(img, use_open_cv:bool = False):
         plt.title("Image")
         plt.axis('off')  # Hide axis labels and ticks
         plt.show()
+        
+def print_img_per_x_and_show(img, ranges, color=[0,0,255], use_open_cv:bool = False):
+    for x_value in ranges:
+        for _, col in enumerate(img):
+            col[x_value] = color
+
+    show_img(img,use_open_cv)

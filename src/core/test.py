@@ -22,7 +22,7 @@ if __name__ == "__main__":
     min, max_value, ratio = get_freq_to_pixel_ratio(img, green_segmented_img)
 
     print(min, max_value, ratio)
-    print("Contractions ranges:", get_contractions_ranges(img, show_image=False))
+    print("Contractions ranges:", get_contractions_ranges(img, show_image=True))
     print(min, max_value, ratio)
     
 
