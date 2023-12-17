@@ -27,6 +27,15 @@ def get_contour_with_largest_area(contours):
 
     return max_contour
 
+def get_second_contour_with_largest_area(contours):
+    if not contours:
+        return []
+
+    # Sort contours by area in descending order
+    sorted_contours = sorted(contours, key=cv2.contourArea, reverse=True)
+    
+    return sorted_contours[1]
+
 def get_contours(img):
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # _, thresholded = cv2.threshold(gray_img, 128, 255, cv2.THRESH_BINARY)
@@ -50,3 +59,13 @@ def preprocess_image(image):
     eroded_image = cv2.erode(dilated_image, np.ones((5, 5), np.uint8), iterations=4)
 
     return eroded_image
+
+
+def get_image_fragment_from_contour(img, contour):
+    # Get the bounding rectangle of the contour
+    x, y, w, h = cv2.boundingRect(contour)
+
+    # Extract the image fragment using slicing
+    img_fragment = img[y:y+h, x:x+w]
+
+    return img_fragment

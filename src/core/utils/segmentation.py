@@ -67,6 +67,7 @@ def segment_black(img):
     return result_black
 
 def detect_and_paint(image):
+    
     # Create a mask for pixels with values (0, 0, 0)
     mask_black = np.all(image == [0, 0, 0], axis=-1)
 
@@ -75,5 +76,6 @@ def detect_and_paint(image):
 
     # Paint pixels with values (0, 0, 0) black in the white image
     white_image[mask_black] = image[mask_black]
+
 
     return white_image
