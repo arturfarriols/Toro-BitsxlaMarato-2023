@@ -5,5 +5,9 @@ torch==2.1.2
 torchvision==0.16.2
 paddlepaddle==2.5.2
 pyside6==6.6.1
+fastapi==0.105.0
+uvicorn==0.24.0.post1
+python-multipart==0.0.6
+python-dotenv==1.0.0
 matplotlib
 scipy
