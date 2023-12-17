@@ -100,5 +100,90 @@ def get_contractions_per_range(img, min_x, max_x, show_image:bool=False):
     
     return segmented_img_per_noise
 
+def get_contractions(img, ratio):
+    threshold = -20 * ratio
+    number_of_contractions = 0
 
+    black_pixels = find_black_pixels(img)
+    # divided_black_pixels = divide_into_contiguous_subdictionaries(black_pixels)
+    mean = calculate_mean(black_pixels)
+    # print("threshold", threshold)
+    img_mean = draw_horizontal_line(img, int(mean))
+
+    # print(np.shape(img))
+    # Prints.show_img(img_mean, use_open_cv=False)
+    # print(mean)
+    # print(np.unique(list(black_pixels.values())))
+    # print(len(divided_black_pixels))
+    values = list(black_pixels.values())
+    is_contraction = False
+
+    for value in values:
+        if value < mean + threshold and not is_contraction:
+            is_contraction = True
+            number_of_contractions += 1
+        elif value >= mean + threshold and is_contraction:
+            is_contraction = False
+
+    return mean / ratio, img_mean, number_of_contractions
+
+def calculate_mean(dictionary):
+    if not dictionary:
+        return None
     
+    values = list(dictionary.values())
+    mean = np.mean(values)
+    return mean
+
+def draw_horizontal_line(image, y_coordinate, color=(0, 0, 255), thickness=2):
+    # Clone the image to avoid modifying the original
+    image_with_line = image.copy()
+
+    # Get the width of the image
+    width = image_with_line.shape[1]
+
+    # Draw a horizontal line
+    cv2.line(image_with_line, (0, y_coordinate), (width, y_coordinate), color, thickness)
+
+    return image_with_line
+
+def divide_into_contiguous_subdictionaries(dictionary, max_gap=1):
+    if not dictionary:
+        return []
+
+    sorted_keys = sorted(dictionary.keys())
+    subdictionaries = []
+
+    current_subdict = {sorted_keys[0]: dictionary[sorted_keys[0]]}
+    previous_key = sorted_keys[0]
+    for key in sorted_keys[1:]:
+        if key - max_gap > previous_key:
+            subdictionaries.append(current_subdict)
+            current_subdict = {key: dictionary[key]}
+        else:
+            current_subdict[key] = dictionary[key]
+        previous_key = key
+
+    subdictionaries.append(current_subdict)
+    return subdictionaries
+
+def find_black_pixels(binary_image):
+    middle_black_pixels = {}  # Dictionary to store column number and middle white pixel y-coordinate
+
+    # Iterate over each column
+    for col in range(binary_image.shape[1]):
+        # Extract the column
+        column = binary_image[:, col]
+
+        # Find the white pixels (pixel value = 255)
+        black_pixels = np.where(column == 0)[0]
+
+        if len(black_pixels) > 0:
+            # Find the middle white pixel
+            middle_pixel_index = black_pixels[len(black_pixels) // 2]
+            middle_pixel_y = middle_pixel_index
+
+            # Store in the dictionary
+            middle_black_pixels[col] = middle_pixel_y
+
+    return middle_black_pixels

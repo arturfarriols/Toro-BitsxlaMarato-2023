@@ -4,7 +4,7 @@ from cardiac_frequency import *
 
 
 if __name__ == "__main__":
-    img_path = "img7.png"
+    img_path = "img2.png"
 
     img = cv2.imread(img_path)
 
@@ -21,8 +21,15 @@ if __name__ == "__main__":
     
     mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations = analyze_red_line(red_segmented_img, min, max_value, ratio)
 
+    
+
     print(mean)
     for i in range(len(ranges)):
         if i+1 < len(ranges):
-            get_contractions_per_range(img, ranges[i],ranges[i+1], True)
+            contraction_img = get_contractions_per_range(img, ranges[i],ranges[i+1], False)
+            mean, img_mean, number_of_contractions = get_contractions(contraction_img, ratio)
+            print(mean)
+            print(number_of_contractions)
+            Prints.show_img(img=img_mean)
+            
     
