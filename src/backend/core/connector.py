@@ -2,7 +2,7 @@ from . import Contractions
 from . import Cardiac
 import cv2
 import os
-
+import uuid
 # Get the current working directory
 
 
@@ -19,6 +19,9 @@ def analyize(img_path):
 
     
     mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations = Cardiac.analyze_red_line(red_segmented_img, min, max_value, ratio)
+    random_uuid = str(uuid.uuid4()) + ".png"
 
+    save_path = os.path.join(current_directory, "src/frontend/public", random_uuid)
+    cv2.imwrite(save_path, img_mean)
     contractions = Contractions.get_contractions_per_ranges(img,ratio)
-    return contractions, mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations
+    return contractions, mean, is_FCFB_determined, random_uuid, variability, amount_accelerations, amount_decelerations

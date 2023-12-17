@@ -60,7 +60,8 @@ async def upload_file(path_request: PathRequest):
         "is_FCFB_determined": bool(is_FCFB_determined),
         "variability": variability,
         "amount_accelerations": amount_accelerations,
-        "amount_decelerations": amount_decelerations
+        "amount_decelerations": amount_decelerations,
+        "img_url": img_mean
     }
 
 

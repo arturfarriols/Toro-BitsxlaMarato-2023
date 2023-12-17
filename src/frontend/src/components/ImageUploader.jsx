@@ -43,7 +43,7 @@ const FileSelector = ({ onSelectFile }) => {
 
 const AnalysisResult = ({ data }) => {
     // Assuming data is the JSON data you want to display
-    const { contractions, mean, is_FCFB_determined, variability, amount_accelerations, amount_decelerations } = data;
+    const { contractions, mean, is_FCFB_determined, variability, amount_accelerations, amount_decelerations, img_url } = data;
   
     return (
       <div>
@@ -56,6 +56,11 @@ const AnalysisResult = ({ data }) => {
           <li><strong>Amount of Accelerations:</strong> {amount_accelerations}</li>
           <li><strong>Amount of Decelerations:</strong> {amount_decelerations}</li>
         </ul>
+        <img
+            src={img_url}
+            alt="Example"
+            style={{ maxWidth: '100%', maxHeight: '100%' }}
+        />
       </div>
     );
   };
