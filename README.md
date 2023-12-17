@@ -45,3 +45,5 @@ As seen in the photo shown above, the algorithm first determines the mean and, t
  * Implementing more visual models (CNN and vision transformers) to determine the viability of retrieving data and processing it using these architectures.
  * Implementing feedforward networks to process the information once its obtained.
  * Improve the frontend.
+
+ ![interface](images/interface.png)
