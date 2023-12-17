@@ -187,3 +187,16 @@ def find_black_pixels(binary_image):
             middle_black_pixels[col] = middle_pixel_y
 
     return middle_black_pixels
+
+def get_contractions_per_ranges(img, ratio):
+    ranges = get_contractions_ranges(img, show_image=False)
+    print("Contractions ranges:", ranges)
+    
+    contractions_per_ranges = []
+    for i in range(len(ranges)):
+        if i+1 < len(ranges):
+            contraction_img = get_contractions_per_range(img, ranges[i],ranges[i+1], False)
+            mean, img_mean, number_of_contractions = get_contractions(contraction_img, ratio)
+            #Prints.show_img(img=img_mean)
+            contractions_per_ranges.append(number_of_contractions)
+    return contractions_per_ranges
