@@ -1,6 +1,16 @@
 import cv2
 import numpy as np
 
+
+
+def segment_colors(img):
+    green_segmented_img = segment_green(img)
+    red_segmented_img = segment_red(img)
+    black_segmented_img = detect_and_paint(img) #segment_black(img)
+
+    return green_segmented_img, red_segmented_img, black_segmented_img
+
+
 def segment_green(image):
     # Convert the image from BGR to HSV color space
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -57,6 +67,7 @@ def segment_black(img):
     return result_black
 
 def detect_and_paint(image):
+    
     # Create a mask for pixels with values (0, 0, 0)
     mask_black = np.all(image == [0, 0, 0], axis=-1)
 
@@ -65,5 +76,6 @@ def detect_and_paint(image):
 
     # Paint pixels with values (0, 0, 0) black in the white image
     white_image[mask_black] = image[mask_black]
+
 
     return white_image
