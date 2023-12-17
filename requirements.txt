@@ -5,3 +5,5 @@ torch==2.1.2
 torchvision==0.16.2
 paddlepaddle==2.5.2
 pyside6==6.6.1
+matplotlib
+scipy
