@@ -6,8 +6,8 @@ def segment_green(image):
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Define the lower and upper bounds for the green color in HSV
-    lower_green = np.array([40, 40, 40])  # Adjust these values based on your specific case
-    upper_green = np.array([80, 255, 255])  # Adjust these values based on your specific case
+    lower_green = np.array([25, 25, 25])  # Adjust these values based on your specific case
+    upper_green = np.array([110, 255, 255])  # Adjust these values based on your specific case
 
     # Create a mask using the inRange function to segment the green color
     mask = cv2.inRange(hsv, lower_green, upper_green)
