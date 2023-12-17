@@ -19,10 +19,10 @@ if __name__ == "__main__":
     print("Contractions ranges:", ranges)
     print(min, max_value, ratio)
     
-    mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations = analyze_red_line(red_segmented_img, min, max, ratio)
+    mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations = analyze_red_line(red_segmented_img, min, max_value, ratio)
 
-
+    print(mean)
     for i in range(len(ranges)):
         if i+1 < len(ranges):
-            get_contractions_per_range(img, ranges[i],ranges[i+1])
+            get_contractions_per_range(img, ranges[i],ranges[i+1], True)
     
