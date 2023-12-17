@@ -7,7 +7,7 @@ SHELL := /bin/bash
 
 backend-setup:
 	@echo *** Running Backend ***
-	python -m venv .venv &&	source ./.venv/bin/activate && pip install -r pp.txt
+	python -m venv .venv &&	source ./.venv/bin/activate && pip install -r requirements.txt
 
 .PHONY: backend
 backend: backend-setup

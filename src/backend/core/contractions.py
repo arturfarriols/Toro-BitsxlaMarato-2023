@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import PIL
 
-from utils import *
+from . import utils
 
 
 def get_contractions_ranges(img, show_image:bool=False):
-    green_segmented_img = Segmentation.segment_green(img)
+    green_segmented_img = utils.Segmentation.segment_green(img)
     
-    contours, _ = Contours.get_contours(green_segmented_img)
+    contours, _ = utils.Contours.get_contours(green_segmented_img)
     max_contour = max(contours, key=lambda cnt: cv2.boundingRect(cnt)[1])
     
     _, y, _, h = cv2.boundingRect(max_contour)
@@ -24,7 +24,7 @@ def get_contractions_ranges(img, show_image:bool=False):
     ranges = [int((p1[0] + p2[0]) / 2) for p1, p2 in zip(selected_points[::2], selected_points[1::2])]
     
     if show_image:
-        Prints.print_img_per_x_and_show(green_segmented_img, ranges)
+        utils.Prints.print_img_per_x_and_show(green_segmented_img, ranges)
     
     return ranges
     
@@ -60,7 +60,7 @@ def get_contour_with_largest_height(contours):
 
 def get_contractions_per_range(img, min_x, max_x, show_image:bool=False):
     
-    black_segmented_img = Segmentation.detect_and_paint(img)
+    black_segmented_img = utils.Segmentation.detect_and_paint(img)
     segmented_img = black_segmented_img[:, min_x:max_x]
     
     gray = cv2.cvtColor(segmented_img, cv2.COLOR_BGR2GRAY)

@@ -4,11 +4,17 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from dotenv import load_dotenv
-from core import connector
+from core import Connector
 import os
 import io
 import zipfile
 import json
+from pydantic import BaseModel
+
+class PathRequest(BaseModel):
+    path: str
+    
+    
 app = FastAPI()
 # Allow CORS for all origins, methods, and headers (not recommended for production)
 app.add_middleware(
@@ -25,24 +31,23 @@ async def ok():
     return {"status": "OK"}
 
 
-@app.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
-    if not file:
-        return JSONResponse(status_code=400, content={"message": "No file provided"})
 
-    file_content = await file.read()
 
-    if not file_content:
-        return JSONResponse(
-            status_code=400, content={"message": "File provided is empty"}
-        )
-
+@app.post("/analyze")
+async def upload_file(path_request: PathRequest):
+    print(path_request)
+    contractions, mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations = Connector.analyize(path_request.path)
+    
+    print(contractions, mean, type(is_FCFB_determined), variability, amount_accelerations, amount_decelerations)
     # You can process the file_content here, for example, save it to disk or perform further operations.
     # For demonstration purposes, this example returns a message with the file details.
     return {
-        "filename": file.filename,
-        "content_type": file.content_type,
-        "file_size": len(file_content),
+        "contractions": contractions,
+        "mean": mean,
+        "is_FCFB_determined": bool(is_FCFB_determined),
+        "variability": variability,
+        "amount_accelerations": amount_accelerations,
+        "amount_decelerations": amount_decelerations
     }
 
 
