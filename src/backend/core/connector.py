@@ -7,11 +7,9 @@ import os
 
 
 def analyize(img_path):
+    
     current_directory = os.getcwd()
-    print(current_directory)
-    absolute_path = os.path.join(current_directory, img_path)
-
-    print("PATHS:",img_path,absolute_path)
+    absolute_path = os.path.join(current_directory, "data/data-hackaton", img_path)
     img = cv2.imread(absolute_path)
 
     green_segmented_img, red_segmented_img, black_segmented_img = Cardiac.utils.Segmentation.segment_colors(img)

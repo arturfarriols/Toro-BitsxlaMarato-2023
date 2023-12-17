@@ -9,6 +9,7 @@ import os
 import io
 import zipfile
 import json
+import os
 from pydantic import BaseModel
 
 class PathRequest(BaseModel):
@@ -31,14 +32,26 @@ async def ok():
     return {"status": "OK"}
 
 
+@app.get("/api/files")
+async def get_files():
+    current_directory = os.getcwd()
+    absolute_path = os.path.join(current_directory, "data/data-hackaton")
+    
+    file_list = []
+    for root, dirs, files in os.walk(absolute_path):
+        for file in files:
+            file_list.append(os.path.relpath(os.path.join(root, file), start=absolute_path))
 
+    try:
+       
+        return JSONResponse(content={"files": file_list})
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
-@app.post("/analyze")
+@app.post("/api/analyze")
 async def upload_file(path_request: PathRequest):
-    print(path_request)
     contractions, mean, is_FCFB_determined, img_mean, variability, amount_accelerations, amount_decelerations = Connector.analyize(path_request.path)
     
-    print(contractions, mean, type(is_FCFB_determined), variability, amount_accelerations, amount_decelerations)
     # You can process the file_content here, for example, save it to disk or perform further operations.
     # For demonstration purposes, this example returns a message with the file details.
     return {

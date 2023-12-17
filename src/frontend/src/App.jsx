@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
 import FileUploadComponent from './components/FileUploadComponent';
+import FileList from './components/ImageUploader';
 import './App.css'
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
     <>
     <div className='bg-neutral-100'>
       <Header />
-      <FileUploadComponent />
+      <FileList />
       <Footer />
       </div>
     </>
