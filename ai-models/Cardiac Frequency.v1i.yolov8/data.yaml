@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['contraction']
+
+roboflow:
+  workspace: upc-oxxbm
+  project: cardiac-frequency
+  version: 1
+  license: MIT
+  url: https://universe.roboflow.com/upc-oxxbm/cardiac-frequency/dataset/1
